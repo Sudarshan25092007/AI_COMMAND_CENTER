@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void: #030712;
+  --surface: rgba(15, 23, 42, 0.6);
+  --neon-green: #4ade80;
+  --neon-red: #ef4444;
+  --neon-blue: #38bdf8;
+  --neon-purple: #c084fc;
+  --neon-amber: #fbbf24;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1e293b #030712;
+}
+
+body {
+  background: var(--void);
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Typewriter blinking cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Neon pulse borders */
+@keyframes neon-pulse-green {
+  0%, 100% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 15px rgba(74, 222, 128, 0.1); }
+  50% { border-color: rgba(74, 222, 128, 0.7); box-shadow: 0 0 30px rgba(74, 222, 128, 0.25); }
+}
+@keyframes neon-pulse-red {
+  0%, 100% { border-color: rgba(239, 68, 68, 0.3); box-shadow: 0 0 15px rgba(239, 68, 68, 0.1); }
+  50% { border-color: rgba(239, 68, 68, 0.7); box-shadow: 0 0 30px rgba(239, 68, 68, 0.25); }
+}
+@keyframes neon-pulse-blue {
+  0%, 100% { border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 0 15px rgba(56, 189, 248, 0.1); }
+  50% { border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 0 25px rgba(56, 189, 248, 0.2); }
+}
+
+.pulse-long { animation: neon-pulse-green 2s ease-in-out infinite; }
+.pulse-short { animation: neon-pulse-red 2s ease-in-out infinite; }
+.pulse-neutral { animation: neon-pulse-blue 3s ease-in-out infinite; }
+
+/* LED indicator */
+@keyframes led-glow {
+  0%, 100% { box-shadow: 0 0 4px currentColor, 0 0 8px currentColor; }
+  50% { box-shadow: 0 0 8px currentColor, 0 0 16px currentColor, 0 0 24px currentColor; }
+}
+.led-active {
+  animation: led-glow 2s ease-in-out infinite;
+}
+
+/* Price flash */
+@keyframes flash-green {
+  0% { color: #4ade80; text-shadow: 0 0 20px rgba(74,222,128,0.8); }
+  100% { color: #f1f5f9; text-shadow: none; }
+}
+@keyframes flash-red {
+  0% { color: #ef4444; text-shadow: 0 0 20px rgba(239,68,68,0.8); }
+  100% { color: #f1f5f9; text-shadow: none; }
+}
+.price-flash-up { animation: flash-green 1.5s ease-out; }
+.price-flash-down { animation: flash-red 1.5s ease-out; }
+
+/* Cockpit switch */
+.cockpit-switch {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  background: #1e293b;
+  border: 2px solid #334155;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.cockpit-switch.active {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: #4ade80;
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+}
+.cockpit-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #64748b;
+  transition: all 0.3s ease;
+}
+.cockpit-switch.active::after {
+  left: 26px;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+}
+
+/* New badge fade */
+@keyframes fade-badge {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.new-badge {
+  animation: fade-badge 3s ease-out forwards;
+}
+
+/* Scan button idle pulse */
+@keyframes scan-btn-pulse {
+  0%, 100% {
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 0px rgba(56, 189, 248, 0);
+  }
+  50% {
+    border-color: rgba(56, 189, 248, 0.7);
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.15);
+  }
+}
+.scan-btn-idle {
+  animation: scan-btn-pulse 3s ease-in-out infinite;
+}
+
+/* Radar scan line */
+@keyframes radar-sweep {
+  0% { top: -2px; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.radar-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.4) 30%, rgba(56, 189, 248, 0.6) 50%, rgba(56, 189, 248, 0.4) 70%, transparent 100%);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3), 0 1px 12px rgba(56, 189, 248, 0.15);
+  animation: radar-sweep 5s linear infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
